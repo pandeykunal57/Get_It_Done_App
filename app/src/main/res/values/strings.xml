@@ -2,4 +2,6 @@
     <string name="app_name">Get It Done</string>
     <string name="new_task">New Task</string>
     <string name="description">Add Details</string>
+    <string name="task_title">Task Title</string>
+    <string name="task_details">Task Details</string>
 </resources>
