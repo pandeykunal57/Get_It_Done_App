@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Get It Done</string>
+    <string name="new_task">New Task</string>
+    <string name="description">Add Details</string>
+</resources>
