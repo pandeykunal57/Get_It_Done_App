@@ -26,13 +26,16 @@ class TaskFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fetchAllTasks()
 
+    }
+
+     fun fetchAllTasks() {
         thread {
-            val task=taskDao.getAllTasks()
-            requireActivity().runOnUiThread{
-                binding.RecyclerView.adapter =TaskAdapter(tasks = task)
+            val task = taskDao.getAllTasks()
+            requireActivity().runOnUiThread {
+                binding.RecyclerView.adapter = TaskAdapter(tasks = task)
             }
         }
-
     }
 }

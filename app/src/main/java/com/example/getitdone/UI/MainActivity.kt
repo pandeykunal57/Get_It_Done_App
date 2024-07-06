@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var database: GetitDoneDatabase
     private val taskDao: TaskDAO by lazy { database.getTaskDao() }
-
+    private val taskFragment:TaskFragment=TaskFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity() {
                 taskDao.createTask(task)
             }
             dialog.dismiss()
+            taskFragment.fetchAllTasks()
 
         }
             dialog.show()
@@ -79,9 +80,12 @@ class MainActivity : AppCompatActivity() {
 
 
     inner class PagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
+
         override fun getItemCount(): Int = 1
+
         override fun createFragment(position: Int): Fragment {
-            return TaskFragment()
+
+            return taskFragment
         }
 
 
