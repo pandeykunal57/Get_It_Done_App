@@ -42,11 +42,7 @@ class MainActivity : AppCompatActivity() {
         database = GetitDoneDatabase.getdatabase(this)
 
 
-        thread {
-            taskDao.createTask(Task(title = "Some TAsk"))
-            taskDao.getAllTasks()
 
-        }
 
 
     }

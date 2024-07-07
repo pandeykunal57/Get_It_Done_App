@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.getitdone.DATA.GetitDoneDatabase
+import com.example.getitdone.DATA.Task
 import com.example.getitdone.DATA.TaskDAO
 import com.example.getitdone.databinding.FragmentTasksBinding
 import kotlin.concurrent.thread
 
-class TaskFragment:Fragment() {
+class TaskFragment:Fragment(),TaskAdapter.TaskUpdatedListener {
     private lateinit var binding: FragmentTasksBinding
     private val taskDao:TaskDAO by lazy {
         GetitDoneDatabase.getdatabase(requireContext()).getTaskDao()
@@ -30,12 +31,20 @@ class TaskFragment:Fragment() {
 
     }
 
+
+
      fun fetchAllTasks() {
         thread {
             val task = taskDao.getAllTasks()
             requireActivity().runOnUiThread {
-                binding.RecyclerView.adapter = TaskAdapter(tasks = task)
+                binding.RecyclerView.adapter = TaskAdapter(tasks = task, listener = this)
             }
         }
     }
+
+     override fun onTaskUpdated(task: Task) {
+         thread {
+             taskDao.updateTask(task)
+         }
+     }
 }
