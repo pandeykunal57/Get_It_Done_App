@@ -16,6 +16,7 @@ class TaskFragment:Fragment(),TaskAdapter.TaskUpdatedListener {
     private val taskDao:TaskDAO by lazy {
         GetitDoneDatabase.getdatabase(requireContext()).getTaskDao()
     }
+    private val  adapter= TaskAdapter(this)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,6 +28,7 @@ class TaskFragment:Fragment(),TaskAdapter.TaskUpdatedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.RecyclerView.adapter=adapter
         fetchAllTasks()
 
     }
@@ -37,7 +39,8 @@ class TaskFragment:Fragment(),TaskAdapter.TaskUpdatedListener {
         thread {
             val task = taskDao.getAllTasks()
             requireActivity().runOnUiThread {
-                binding.RecyclerView.adapter = TaskAdapter(tasks = task, listener = this)
+//                binding.RecyclerView.adapter = TaskAdapter(tasks = task, listener = this)
+                    adapter.setTasks(task)
             }
         }
     }
@@ -45,6 +48,7 @@ class TaskFragment:Fragment(),TaskAdapter.TaskUpdatedListener {
      override fun onTaskUpdated(task: Task) {
          thread {
              taskDao.updateTask(task)
+             fetchAllTasks()
          }
      }
 }
